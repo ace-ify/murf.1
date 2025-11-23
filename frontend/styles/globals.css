@@ -5,71 +5,75 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Warm Coffee & Starbucks Theme */
+  --background: #F9F7F4;
+  --foreground: #3D2817;
+  --card: #FFFFFF;
+  --card-foreground: #3D2817;
+  --popover: #FFFFFF;
+  --popover-foreground: #3D2817;
+  /* Starbucks signature green #00704A */
+  --primary: #00704A;
+  --primary-foreground: #FFFFFF;
+  /* Warm brown accent */
+  --secondary: #D4A574;
+  --secondary-foreground: #3D2817;
+  --muted: #F4EDE4;
+  --muted-foreground: #6B5947;
+  --accent: #8B5A3C;
+  --accent-foreground: #FFFFFF;
+  --destructive: #C23B22;
+  --border: #E8DDD1;
+  --input: #E8DDD1;
+  --ring: #00704A;
+  --chart-1: #00704A;
+  --chart-2: #D4A574;
+  --chart-3: #8B5A3C;
+  --chart-4: #6B5947;
+  --chart-5: #C7A27C;
+  --sidebar: #F9F7F4;
+  --sidebar-foreground: #3D2817;
+  --sidebar-primary: #00704A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F4EDE4;
+  --sidebar-accent-foreground: #3D2817;
+  --sidebar-border: #E8DDD1;
+  --sidebar-ring: #00704A;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.269 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.439 0 0);
+  /* Dark Coffee Shop Theme */
+  --background: #1C0F0A;
+  --foreground: #F4EDE4;
+  --card: #2A1810;
+  --card-foreground: #F4EDE4;
+  --popover: #2A1810;
+  --popover-foreground: #F4EDE4;
+  --primary: #1E9668;
+  --primary-foreground: #FFFFFF;
+  --secondary: #8B6F47;
+  --secondary-foreground: #F4EDE4;
+  --muted: #3D2817;
+  --muted-foreground: #C7A27C;
+  --accent: #D4A574;
+  --accent-foreground: #1C0F0A;
+  --destructive: #E85D3B;
+  --border: rgba(212, 165, 116, 0.15);
+  --input: rgba(212, 165, 116, 0.2);
+  --ring: #1E9668;
+  --chart-1: #1E9668;
+  --chart-2: #D4A574;
+  --chart-3: #C7A27C;
+  --chart-4: #8B6F47;
+  --chart-5: #6B5947;
+  --sidebar: #2A1810;
+  --sidebar-foreground: #F4EDE4;
+  --sidebar-primary: #1E9668;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #3D2817;
+  --sidebar-accent-foreground: #F4EDE4;
+  --sidebar-border: rgba(212, 165, 116, 0.15);
+  --sidebar-ring: #1E9668;
 }
 
 @theme inline {
@@ -157,5 +161,83 @@
     100% {
       background-position: 250% 0;
     }
+  }
+
+  /* Custom Coffee Shop Animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  @keyframes steam-rise {
+    0% {
+      opacity: 0.6;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-40px) scale(1.5);
+    }
+  }
+
+  @keyframes coffee-pour {
+    0% {
+      transform: translateY(-100%) scaleY(0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) scaleY(1);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes bean-spin {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    25% {
+      transform: rotate(90deg) scale(1.1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1);
+    }
+    75% {
+      transform: rotate(270deg) scale(1.1);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(0, 112, 74, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(0, 112, 74, 0.6);
+    }
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-steam {
+    animation: steam-rise 2.5s ease-out infinite;
+  }
+
+  .animate-bean-spin {
+    animation: bean-spin 8s linear infinite;
+  }
+
+  .animate-glow {
+    animation: glow-pulse 2s ease-in-out infinite;
   }
 }

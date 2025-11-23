@@ -1,4 +1,8 @@
 import logging
+import json
+import os
+from datetime import datetime
+from typing import Optional
 
 from dotenv import load_dotenv
 from livekit.agents import (
@@ -12,10 +16,10 @@ from livekit.agents import (
     cli,
     metrics,
     tokenize,
-    # function_tool,
-    # RunContext
+    function_tool,
+    RunContext
 )
-from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
+from livekit.plugins import murf, silero, openai, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
 logger = logging.getLogger("agent")
@@ -26,28 +30,84 @@ load_dotenv(".env.local")
 class Assistant(Agent):
     def __init__(self) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            instructions="""You are a friendly Starbucks barista taking voice orders. The user is interacting with you via voice.
+            
+            Your job is to help customers order their perfect coffee drink by gathering the following information:
+            - drinkType: The type of drink (e.g., Latte, Cappuccino, Americano, Flat White, Mocha, Caramel Macchiato, Frappuccino, Cold Brew, etc.)
+            - size: The size (Tall, Grande, or Venti)
+            - milk: The type of milk (Whole Milk, 2% Milk, Nonfat Milk, Almond Milk, Oat Milk, Soy Milk, Coconut Milk)
+            - extras: Any add-ons or modifications (e.g., Extra Shot, Vanilla Syrup, Caramel Drizzle, Whipped Cream, Sugar-Free, Extra Hot, Iced, etc.)
+            - name: The customer's name for the order
+            
+            Be warm, welcoming, and use Starbucks lingo naturally. Ask clarifying questions one at a time until you have all the information.
+            If the customer doesn't specify something, suggest popular options. Keep responses concise and friendly.
+            
+            Once you have all the information, confirm the complete order with the customer, then save it using the save_order tool.
+            After saving, thank them warmly and let them know their order is being prepared.""",
         )
-
-    # To add tools, use the @function_tool decorator.
-    # Here's an example that adds a simple weather tool.
-    # You also have to add `from livekit.agents import function_tool, RunContext` to the top of this file
-    # @function_tool
-    # async def lookup_weather(self, context: RunContext, location: str):
-    #     """Use this tool to look up current weather information in the given location.
-    #
-    #     If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
-    #
-    #     Args:
-    #         location: The location to look up weather information for (e.g. city name)
-    #     """
-    #
-    #     logger.info(f"Looking up weather for {location}")
-    #
-    #     return "sunny with a temperature of 70 degrees."
+        
+        # Initialize order state
+        self.order_state = {
+            "drinkType": None,
+            "size": None,
+            "milk": None,
+            "extras": [],
+            "name": None
+        }
+    
+    @function_tool
+    async def save_order(
+        self, 
+        context: RunContext, 
+        drink_type: str,
+        size: str,
+        milk: str,
+        extras: str,
+        name: str
+    ):
+        """Save the customer's completed coffee order to a JSON file.
+        
+        This tool should be called ONLY when you have collected all required information:
+        drinkType, size, milk, extras (can be empty list), and name.
+        
+        Args:
+            drink_type: The type of coffee drink (e.g., Latte, Cappuccino, Mocha)
+            size: The size of the drink (Tall, Grande, or Venti)
+            milk: The type of milk (e.g., Whole Milk, Oat Milk, Almond Milk)
+            extras: Comma-separated list of extras or modifications (e.g., "Extra Shot, Vanilla Syrup")
+            name: The customer's name for the order
+        """
+        
+        logger.info(f"Saving order for {name}: {size} {drink_type} with {milk}")
+        
+        # Parse extras into a list
+        extras_list = [e.strip() for e in extras.split(",")] if extras else []
+        
+        # Create order object
+        order = {
+            "drinkType": drink_type,
+            "size": size,
+            "milk": milk,
+            "extras": extras_list,
+            "name": name,
+            "timestamp": datetime.now().isoformat(),
+            "orderNumber": datetime.now().strftime("%Y%m%d%H%M%S")
+        }
+        
+        # Ensure orders directory exists
+        orders_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "orders")
+        os.makedirs(orders_dir, exist_ok=True)
+        
+        # Save to JSON file
+        filename = f"order_{order['orderNumber']}_{name.replace(' ', '_')}.json"
+        filepath = os.path.join(orders_dir, filename)
+        
+        with open(filepath, 'w') as f:
+            json.dump(order, f, indent=2)
+        
+        logger.info(f"Order saved successfully to {filepath}")
+        
+        return f"Order saved successfully! Order number: {order['orderNumber']}"
 
 
 def prewarm(proc: JobProcess):
@@ -68,8 +128,8 @@ async def entrypoint(ctx: JobContext):
         stt=deepgram.STT(model="nova-3"),
         # A Large Language Model (LLM) is your agent's brain, processing user input and generating a response
         # See all available models at https://docs.livekit.io/agents/models/llm/
-        llm=google.LLM(
-                model="gemini-2.5-flash",
+        llm=openai.LLM(
+                model="gpt-4o-mini",
             ),
         # Text-to-speech (TTS) is your agent's voice, turning the LLM's text into speech that the user can hear
         # See all available models as well as voice selections at https://docs.livekit.io/agents/models/tts/
