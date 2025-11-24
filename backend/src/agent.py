@@ -1,4 +1,8 @@
 import logging
+import json
+import os
+from datetime import datetime
+from pathlib import Path
 
 from dotenv import load_dotenv
 from livekit.agents import (
@@ -12,8 +16,8 @@ from livekit.agents import (
     cli,
     metrics,
     tokenize,
-    # function_tool,
-    # RunContext
+    function_tool,
+    RunContext
 )
 from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
@@ -22,32 +26,133 @@ logger = logging.getLogger("agent")
 
 load_dotenv(".env.local")
 
+# Path to wellness log file
+WELLNESS_LOG_PATH = Path(__file__).parent.parent / "wellness_log.json"
+
+
+def load_wellness_log():
+    """Load wellness log from JSON file"""
+    if not WELLNESS_LOG_PATH.exists():
+        return []
+    
+    try:
+        with open(WELLNESS_LOG_PATH, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"Error loading wellness log: {e}")
+        return []
+
+
+def save_wellness_log(entries):
+    """Save wellness log to JSON file"""
+    try:
+        with open(WELLNESS_LOG_PATH, 'w') as f:
+            json.dump(entries, f, indent=2)
+        logger.info(f"Wellness log saved to {WELLNESS_LOG_PATH}")
+    except Exception as e:
+        logger.error(f"Error saving wellness log: {e}")
+
 
 class Assistant(Agent):
     def __init__(self) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            instructions="""You are a supportive and grounded health and wellness voice companion. Your role is to conduct daily check-ins with users about their mood, energy, and daily goals.
+
+Your approach:
+- Be warm, empathetic, and supportive, but realistic and non-judgmental
+- Ask about mood and energy levels in a conversational way
+- Help users identify 1-3 practical objectives or intentions for the day
+- Offer simple, actionable, and grounded advice (not medical or diagnostic)
+- Reference past check-ins when available to show continuity
+- Keep advice small and realistic (like taking short breaks, breaking tasks into steps, simple grounding exercises)
+- Close each check-in with a brief recap of mood and objectives
+- Encourage the user to confirm if the recap sounds right
+
+Remember:
+- You are NOT a clinician or therapist - you're a supportive companion
+- Avoid medical diagnoses or clinical advice
+- Keep conversations concise and voice-friendly
+- No complex formatting, emojis, or special characters in your responses
+- Your responses should sound natural when spoken aloud
+
+When the user confirms their check-in is complete, use the save_checkin tool to persist the data.
+If you need to reference past check-ins, use the get_past_checkins tool.""",
         )
 
-    # To add tools, use the @function_tool decorator.
-    # Here's an example that adds a simple weather tool.
-    # You also have to add `from livekit.agents import function_tool, RunContext` to the top of this file
-    # @function_tool
-    # async def lookup_weather(self, context: RunContext, location: str):
-    #     """Use this tool to look up current weather information in the given location.
-    #
-    #     If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
-    #
-    #     Args:
-    #         location: The location to look up weather information for (e.g. city name)
-    #     """
-    #
-    #     logger.info(f"Looking up weather for {location}")
-    #
-    #     return "sunny with a temperature of 70 degrees."
+    @function_tool
+    async def save_checkin(
+        self,
+        context: RunContext,
+        mood: str,
+        energy: str,
+        objectives: str,
+        summary: str = ""
+    ):
+        """Save the current wellness check-in to the log file.
+        
+        Use this tool when the user has shared their mood, energy level, and daily objectives,
+        and you have provided a recap that they've confirmed.
+        
+        Args:
+            mood: The user's reported mood (e.g., "feeling good", "a bit stressed", "low energy")
+            energy: The user's energy level (e.g., "high", "medium", "low", "tired but motivated")
+            objectives: The user's stated objectives or intentions for the day (list 1-3 items)
+            summary: An optional brief summary sentence about this check-in
+        """
+        logger.info(f"Saving wellness check-in: mood={mood}, energy={energy}")
+        
+        # Load existing entries
+        entries = load_wellness_log()
+        
+        # Create new entry
+        new_entry = {
+            "date": datetime.now().isoformat(),
+            "mood": mood,
+            "energy": energy,
+            "objectives": objectives,
+            "summary": summary or f"Check-in on {datetime.now().strftime('%B %d, %Y')}"
+        }
+        
+        # Add to log
+        entries.append(new_entry)
+        
+        # Save back to file
+        save_wellness_log(entries)
+        
+        return f"Check-in saved successfully. I've recorded your mood, energy level, and objectives for today."
+
+    @function_tool
+    async def get_past_checkins(self, context: RunContext, days: int = 7):
+        """Retrieve past wellness check-ins from the log.
+        
+        Use this tool at the start of a conversation to reference previous check-ins,
+        or when the user asks about their history or trends.
+        
+        Args:
+            days: Number of recent days to retrieve (default 7)
+        """
+        logger.info(f"Retrieving past {days} days of check-ins")
+        
+        entries = load_wellness_log()
+        
+        if not entries:
+            return "This is your first check-in. Welcome!"
+        
+        # Get the most recent entries
+        recent_entries = entries[-days:] if len(entries) > days else entries
+        
+        # Format the entries for the LLM
+        formatted = []
+        for entry in recent_entries:
+            date_str = datetime.fromisoformat(entry['date']).strftime('%B %d, %Y')
+            formatted.append(
+                f"Date: {date_str}\n"
+                f"Mood: {entry['mood']}\n"
+                f"Energy: {entry['energy']}\n"
+                f"Objectives: {entry['objectives']}"
+            )
+        
+        return "Past check-ins:\n\n" + "\n\n".join(formatted)
 
 
 def prewarm(proc: JobProcess):
