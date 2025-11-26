@@ -200,6 +200,13 @@ class SDRAssistant(Agent):
             "conversation_notes": []
         }
         self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self._greeted = False
+    
+    async def on_connected(self, ctx: RunContext):
+        """Called when the agent connects to the room. Send initial greeting."""
+        if not self._greeted:
+            await ctx.say("Hello! I'm Elena from Lenskart. Thanks for connecting with us today. How can I help you?")
+            self._greeted = True
     
     @function_tool
     async def search_faq(self, context: RunContext, query: str):
