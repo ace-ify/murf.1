@@ -1,0 +1,206 @@
+{
+  "company": {
+    "name": "Lenskart",
+    "tagline": "India's Leading Eyewear Brand - Redefining the way India sees",
+    "founded": "2010",
+    "headquarters": "Faridabad, Delhi NCR, India",
+    "founder": "Peyush Bansal",
+    "description": "Lenskart is India's largest eyewear company with over 2000+ stores across India and presence in Singapore, UAE, and USA. We offer prescription eyeglasses, sunglasses, contact lenses, and eye care solutions. Our mission is to provide high-quality, affordable eyewear to everyone. We pioneered the 3D try-on technology and home eye checkup service in India.",
+    "customers": "Over 40 million customers served. We cater to individuals, corporate clients for bulk orders, and entrepreneurs looking for franchise opportunities.",
+    "usp": "Affordable premium eyewear with free home eye checkups, 3D virtual try-on, and India's largest retail eyewear network.",
+    "stores": "2000+ retail stores across 300+ cities in India"
+  },
+  "products": [
+    {
+      "name": "Eyeglasses",
+      "description": "Wide range of prescription eyeglasses with frames starting from ₹999. Choose from 5000+ frame styles including our premium brands like Vincent Chase, John Jacobs, and Lenskart Air.",
+      "features": [
+        "Frames starting from ₹999",
+        "5000+ styles available",
+        "Free anti-glare coating",
+        "Premium brands: Vincent Chase, John Jacobs, Lenskart Air",
+        "Blu-cut lenses for digital screen protection",
+        "Progressive and bifocal lenses available"
+      ]
+    },
+    {
+      "name": "Sunglasses",
+      "description": "Stylish sunglasses with UV protection. Choose from polarized, tinted, and prescription sunglasses across premium and budget collections.",
+      "features": [
+        "100% UV protection",
+        "Polarized options available",
+        "Prescription sunglasses",
+        "Starting from ₹999",
+        "Premium and budget collections"
+      ]
+    },
+    {
+      "name": "Contact Lenses",
+      "description": "Daily, monthly, and colored contact lenses from top brands like Bausch & Lomb, Johnson & Johnson, and our own Lenskart brand.",
+      "features": [
+        "Daily, weekly, and monthly disposables",
+        "Colored lenses available",
+        "Top brands: Acuvue, Bausch & Lomb, Alcon",
+        "Subscription plans for regular users",
+        "Free delivery on orders above ₹500"
+      ]
+    },
+    {
+      "name": "Home Eye Checkup",
+      "description": "Free eye checkup at your home by certified optometrists. Book an appointment and our team visits you with professional equipment.",
+      "features": [
+        "Free service (no charges)",
+        "Certified optometrists",
+        "Professional eye testing equipment",
+        "Available in 100+ cities",
+        "Book online or via app"
+      ]
+    },
+    {
+      "name": "Corporate Eyewear Program",
+      "description": "Bulk eyewear solutions for companies. Offer your employees discounted eyewear as a wellness benefit. Special corporate pricing and dedicated support.",
+      "features": [
+        "Special corporate discounts (up to 40% off)",
+        "Dedicated account manager",
+        "On-site eye camps at your office",
+        "Employee wellness integration",
+        "Flexible payment options"
+      ]
+    },
+    {
+      "name": "Lenskart Franchise",
+      "description": "Partner with India's largest eyewear brand. Open your own Lenskart store with our proven business model, training, and ongoing support.",
+      "features": [
+        "Investment starting from ₹25-35 lakhs",
+        "Complete training and setup support",
+        "Access to 5000+ product catalog",
+        "Marketing and brand support",
+        "Average ROI in 18-24 months",
+        "Ongoing operational support"
+      ]
+    }
+  ],
+  "pricing": {
+    "eyeglasses": {
+      "budget_frames": "Starting from ₹999 (frame + basic lenses)",
+      "mid_range": "₹1500 - ₹3000 (with anti-glare coating)",
+      "premium": "₹3000 - ₹8000 (designer frames with advanced lenses)",
+      "blu_cut_lenses": "Add ₹500 for blue light protection",
+      "progressive_lenses": "Starting from ₹2500 additional"
+    },
+    "contact_lenses": {
+      "daily_disposable": "₹800 - ₹2500 per box (30 lenses)",
+      "monthly_disposable": "₹400 - ₹1200 per pair",
+      "colored_lenses": "₹600 - ₹1500 per pair"
+    },
+    "franchise": {
+      "investment": "₹25-35 lakhs total investment",
+      "franchise_fee": "₹5 lakhs (one-time)",
+      "store_setup": "₹15-25 lakhs (interiors, equipment)",
+      "working_capital": "₹5 lakhs recommended",
+      "royalty": "8% of monthly revenue",
+      "marketing_fee": "2% of monthly revenue"
+    },
+    "corporate": {
+      "discount": "Up to 40% off on MRP",
+      "minimum_order": "No minimum order requirement",
+      "eye_camp": "Free on-site eye camps for 50+ employees"
+    }
+  },
+  "faq": [
+    {
+      "question": "What does Lenskart do?",
+      "answer": "Lenskart is India's largest eyewear company. We sell prescription eyeglasses, sunglasses, and contact lenses through our 2000+ retail stores and online platform. We also offer free home eye checkups, corporate eyewear programs, and franchise opportunities. Over 40 million Indians trust Lenskart for their vision needs."
+    },
+    {
+      "question": "Who is Lenskart for?",
+      "answer": "Lenskart serves everyone who needs eyewear! Whether you need prescription glasses, stylish sunglasses, or contact lenses, we have options for all ages and budgets. We also work with companies for employee eyewear benefits and entrepreneurs interested in opening a Lenskart franchise."
+    },
+    {
+      "question": "Do you have affordable options?",
+      "answer": "Absolutely! Our frames start from just ₹999 including basic lenses. We believe quality eyewear should be accessible to everyone. Our budget range offers great styles without compromising on quality, and we frequently run offers where you can get frames as low as ₹500."
+    },
+    {
+      "question": "What is the home eye checkup service?",
+      "answer": "Our free home eye checkup service brings a certified optometrist to your doorstep with professional equipment. You can book online or through our app, and we'll schedule a convenient time. The service is completely free - you only pay if you decide to buy glasses. Available in over 100 cities across India."
+    },
+    {
+      "question": "How does the franchise program work?",
+      "answer": "Lenskart franchise is a great business opportunity. The total investment is ₹25-35 lakhs, which includes franchise fee, store setup, and working capital. We provide complete training, inventory, marketing support, and ongoing operational help. Most franchisees see ROI in 18-24 months. It's a proven model with 2000+ successful stores."
+    },
+    {
+      "question": "What is the franchise investment required?",
+      "answer": "The total investment for a Lenskart franchise ranges from ₹25-35 lakhs. This includes a ₹5 lakh franchise fee, ₹15-25 lakhs for store setup and interiors, and ₹5 lakhs recommended working capital. There's an 8% royalty and 2% marketing fee on monthly revenue. Location and store size affect the final investment."
+    },
+    {
+      "question": "Do you offer corporate or bulk discounts?",
+      "answer": "Yes! Our Corporate Eyewear Program offers up to 40% discount on eyewear for your employees. We can set up on-site eye camps at your office for free if you have 50+ employees. There's no minimum order requirement, and you get a dedicated account manager for easy coordination."
+    },
+    {
+      "question": "What brands do you carry?",
+      "answer": "We have our own premium brands like Vincent Chase, John Jacobs, and Lenskart Air, which offer designer quality at affordable prices. For contact lenses, we stock top international brands like Acuvue, Bausch & Lomb, and Alcon. We also have budget options under our Lenskart Hustlr collection."
+    },
+    {
+      "question": "Can I try frames before buying?",
+      "answer": "Yes, you have multiple options! Visit any of our 2000+ stores for in-person try-on, use our 3D Virtual Try-On feature on the app or website to see how frames look on your face, or order frames home for trial. We also have a 14-day return policy if you're not satisfied."
+    },
+    {
+      "question": "What are Blu-cut lenses?",
+      "answer": "Blu-cut lenses are special lenses that filter blue light from digital screens like phones, laptops, and TVs. They reduce eye strain, headaches, and sleep disruption caused by extended screen time. You can add Blu-cut coating to any prescription for just ₹500 extra. Highly recommended for people who work on computers."
+    },
+    {
+      "question": "How long does delivery take?",
+      "answer": "Standard delivery takes 5-7 business days for prescription glasses as we custom-make them for you. Contact lenses and non-prescription sunglasses are delivered in 2-3 days. Express delivery is available in select cities for faster service. Store pickup is instant if stock is available."
+    },
+    {
+      "question": "Do you have a return policy?",
+      "answer": "Yes, we have a 14-day no-questions-asked return policy. If you're not happy with your glasses for any reason, return them within 14 days for a full refund or exchange. The product should be in original condition. Contact lenses have a separate policy - unopened boxes can be returned within 14 days."
+    },
+    {
+      "question": "How do I become a Lenskart franchise partner?",
+      "answer": "To become a franchise partner, you can start by expressing interest through our website or speaking with our team. We'll evaluate your location preference and investment capacity. The process includes application review, location approval, agreement signing, store setup, training, and launch. The entire process takes about 3-4 months from approval to store opening."
+    },
+    {
+      "question": "What support do franchise partners get?",
+      "answer": "Franchise partners get comprehensive support including complete store setup assistance, staff training on products and eye testing, access to our inventory management system, marketing and promotional support, ongoing operational guidance, and a dedicated relationship manager. We're invested in your success because your success is our success."
+    },
+    {
+      "question": "Is Lenskart available outside India?",
+      "answer": "Yes, Lenskart has expanded internationally! We have stores in Singapore and UAE, and we've entered the US market as well. Our online platform ships to many countries. We're rapidly growing our global footprint while maintaining the same quality and affordability that made us successful in India."
+    }
+  ],
+  "use_cases": [
+    "Individuals needing prescription eyeglasses",
+    "People looking for affordable stylish sunglasses", 
+    "Contact lens users wanting convenient delivery",
+    "Senior citizens needing progressive or bifocal lenses",
+    "IT professionals needing blue light protection glasses",
+    "Companies wanting employee eyewear benefits",
+    "HR managers organizing workplace wellness programs",
+    "Entrepreneurs seeking franchise opportunities",
+    "Parents buying glasses for children",
+    "Fashion-conscious customers wanting trendy frames"
+  ],
+  "competitors": [
+    "Titan Eye Plus",
+    "Specsmakers",
+    "ClearDekho",
+    "GKB Opticals",
+    "Lawrence & Mayo",
+    "Vision Express"
+  ],
+  "lead_types": {
+    "franchise_inquiry": {
+      "typical_fields": ["name", "location_preference", "investment_capacity", "current_business", "timeline"],
+      "qualification_criteria": "Investment capacity of ₹25L+, good location in tier 1-3 city, business acumen"
+    },
+    "corporate_inquiry": {
+      "typical_fields": ["company_name", "contact_person", "employee_count", "location", "email"],
+      "qualification_criteria": "Company with 50+ employees, interest in employee wellness"
+    },
+    "general_customer": {
+      "typical_fields": ["name", "eye_concern", "preferred_contact", "location"],
+      "qualification_criteria": "Looking to purchase eyewear"
+    }
+  }
+}
