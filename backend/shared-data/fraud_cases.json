@@ -1,0 +1,99 @@
+{
+  "fraud_cases": [
+    {
+      "id": "FC001",
+      "userName": "John",
+      "securityIdentifier": "12345",
+      "securityQuestion": "What is your mother's maiden name?",
+      "securityAnswer": "Smith",
+      "cardEnding": "4242",
+      "status": "confirmed_safe",
+      "transaction": {
+        "name": "TechGadgets Pro",
+        "amount": "$847.99",
+        "time": "November 26, 2025 at 11:42 PM",
+        "category": "Electronics",
+        "source": "techgadgetspro.com",
+        "location": "Singapore"
+      },
+      "outcome": "confirmed_safe",
+      "outcomeNote": "Customer confirmed the transaction as legitimate."
+    },
+    {
+      "id": "FC002",
+      "userName": "Sarah",
+      "securityIdentifier": "67890",
+      "securityQuestion": "What is the name of your first pet?",
+      "securityAnswer": "Buddy",
+      "cardEnding": "8765",
+      "status": "pending_review",
+      "transaction": {
+        "name": "LuxuryWatch Emporium",
+        "amount": "$2,499.00",
+        "time": "November 27, 2025 at 3:15 AM",
+        "category": "Jewelry & Watches",
+        "source": "luxurywatch-emporium.net",
+        "location": "Hong Kong"
+      },
+      "outcome": null,
+      "outcomeNote": null
+    },
+    {
+      "id": "FC003",
+      "userName": "Michael",
+      "securityIdentifier": "24680",
+      "securityQuestion": "What city were you born in?",
+      "securityAnswer": "Chicago",
+      "cardEnding": "3456",
+      "status": "pending_review",
+      "transaction": {
+        "name": "GlobalAirTravel",
+        "amount": "$1,299.50",
+        "time": "November 26, 2025 at 6:30 PM",
+        "category": "Travel",
+        "source": "globalairtravel.com",
+        "location": "Dubai"
+      },
+      "outcome": null,
+      "outcomeNote": null
+    },
+    {
+      "id": "FC004",
+      "userName": "Emily",
+      "securityIdentifier": "13579",
+      "securityQuestion": "What is your favorite movie?",
+      "securityAnswer": "Inception",
+      "cardEnding": "9012",
+      "status": "pending_review",
+      "transaction": {
+        "name": "DigitalGameStore",
+        "amount": "$199.99",
+        "time": "November 27, 2025 at 8:05 AM",
+        "category": "Gaming",
+        "source": "digitalgamestore.io",
+        "location": "Netherlands"
+      },
+      "outcome": null,
+      "outcomeNote": null
+    },
+    {
+      "id": "FC005",
+      "userName": "David",
+      "securityIdentifier": "97531",
+      "securityQuestion": "What is your mother's maiden name?",
+      "securityAnswer": "Johnson",
+      "cardEnding": "5678",
+      "status": "pending_review",
+      "transaction": {
+        "name": "CryptoExchange24",
+        "amount": "$5,000.00",
+        "time": "November 26, 2025 at 2:00 AM",
+        "category": "Cryptocurrency",
+        "source": "cryptoexchange24.com",
+        "location": "Russia"
+      },
+      "outcome": null,
+      "outcomeNote": null
+    }
+  ]
+}
