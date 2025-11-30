@@ -12,11 +12,17 @@ from livekit.agents import (
     cli,
     metrics,
     tokenize,
-    # function_tool,
-    # RunContext
+    llm,
+    function_tool,
+    RunContext,
 )
 from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
+
+try:
+    from . import commerce
+except ImportError:
+    import commerce
 
 logger = logging.getLogger("agent")
 
@@ -26,28 +32,59 @@ load_dotenv(".env.local")
 class Assistant(Agent):
     def __init__(self) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting including emojis, asterisks, or other weird symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            instructions="""You are a helpful voice shopping assistant.
+            You help users browse a product catalog and place orders.
+            
+            Your capabilities:
+            1. Search for products by name, description, category, or price.
+            2. Place orders for specific products.
+            3. Retrieve the last order placed.
+            
+            When a user wants to buy something, you must:
+            1. Identify the product they want.
+            2. Confirm the product details (name, price) before ordering if ambiguous.
+            3. Call the `create_order` tool.
+            4. Confirm the order details to the user after the tool returns.
+            
+            Keep your responses concise and helpful. Avoid markdown symbols like asterisks or bolding in your spoken response.""",
         )
 
-    # To add tools, use the @function_tool decorator.
-    # Here's an example that adds a simple weather tool.
-    # You also have to add `from livekit.agents import function_tool, RunContext` to the top of this file
-    # @function_tool
-    # async def lookup_weather(self, context: RunContext, location: str):
-    #     """Use this tool to look up current weather information in the given location.
-    #
-    #     If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
-    #
-    #     Args:
-    #         location: The location to look up weather information for (e.g. city name)
-    #     """
-    #
-    #     logger.info(f"Looking up weather for {location}")
-    #
-    #     return "sunny with a temperature of 70 degrees."
+    @function_tool
+    def list_products(
+        self,
+        context: RunContext,
+        search_query: str = "",
+        category: str = "",
+        max_price: float = 0.0,
+    ):
+        """
+        Search for products by name, description, category, or maximum price.
+        Returns a list of matching products.
+        """
+        logger.info(f"Listing products: query={search_query}, category={category}, max_price={max_price}")
+        return commerce.list_products(search_query, category, max_price)
+
+    @function_tool
+    def create_order(
+        self,
+        context: RunContext,
+        product_id: str,
+        quantity: int = 1,
+    ):
+        """
+        Place an order for a specific product ID.
+        Returns the created order details.
+        """
+        logger.info(f"Creating order: product_id={product_id}, quantity={quantity}")
+        return commerce.create_order(product_id, quantity)
+
+    @function_tool
+    def get_last_order(self, context: RunContext):
+        """
+        Retrieve the most recent order placed in this session or historically.
+        """
+        logger.info("Getting last order")
+        return commerce.get_last_order()
 
 
 def prewarm(proc: JobProcess):
