@@ -12,42 +12,115 @@ from livekit.agents import (
     cli,
     metrics,
     tokenize,
-    # function_tool,
-    # RunContext
+    function_tool,
+    RunContext
 )
 from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
+from pathlib import Path
+
 logger = logging.getLogger("agent")
 
-load_dotenv(".env.local")
+# Load .env.local from the backend directory (one level up from src)
+env_path = Path(__file__).parent.parent / ".env.local"
+load_dotenv(dotenv_path=env_path)
+
+
+class ImprovGame:
+    def __init__(self):
+        self.player_name = None
+        self.current_round = 0
+        self.max_rounds = 3
+        self.history = []  # To store round summaries: {"scenario": str, "reaction": str}
+        self.scenarios = [
+            "You are a time-travelling tour guide explaining modern smartphones to someone from the 1800s.",
+            "You are a restaurant waiter who must calmly tell a customer that their order has escaped the kitchen.",
+            "You are a customer trying to return an obviously cursed object to a very skeptical shop owner.",
+            "You are a cat trying to convince a dog that you are actually a small, weird-looking dog.",
+            "You are an alien trying to order a pizza but you only know words from Shakespeare plays."
+        ]
+
+    @property
+    def is_game_over(self):
+        return self.current_round >= self.max_rounds
+
+    def get_next_scenario(self):
+        if self.current_round < len(self.scenarios):
+            return self.scenarios[self.current_round]
+        return None
+
+    def advance_round(self):
+        self.current_round += 1
+
+    def add_history(self, scenario, reaction):
+        self.history.append({"scenario": scenario, "reaction": reaction})
 
 
 class Assistant(Agent):
     def __init__(self) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting including emojis, asterisks, or other weird symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            instructions="""You are the charismatic and witty host of a TV improv show called 'Improv Battle'.
+            
+            Your goal is to guide the player through a series of improv challenges.
+            
+            **Your Style:**
+            - High-energy, fun, and clear about the rules.
+            - You react to the player's performance with a mix of amusement, surprise, and light teasing.
+            - You are NEVER mean, but you are honest. If a performance was flat, say so (gently). If it was great, celebrate it!
+            
+            **The Game Flow:**
+            1.  **Intro:** Welcome the player to "Improv Battle". Ask for their name if you don't know it.
+            2.  **The Setup:** Present a scenario clearly. Tell them who they are and what the situation is.
+            3.  **The Act:** Listen to them perform.
+            4.  **The Reaction:** React to their performance. Be specific about what they said.
+            5.  **Next Round:** Move to the next scenario until the game is over.
+            6.  **Finale:** Give a summary of their improv style and say goodbye.
+            
+            Always keep the show moving!""",
         )
+        self.game = ImprovGame()
 
-    # To add tools, use the @function_tool decorator.
-    # Here's an example that adds a simple weather tool.
-    # You also have to add `from livekit.agents import function_tool, RunContext` to the top of this file
-    # @function_tool
-    # async def lookup_weather(self, context: RunContext, location: str):
-    #     """Use this tool to look up current weather information in the given location.
-    #
-    #     If the location is not supported by the weather service, the tool will indicate this. You must tell the user the location's weather is unavailable.
-    #
-    #     Args:
-    #         location: The location to look up weather information for (e.g. city name)
-    #     """
-    #
-    #     logger.info(f"Looking up weather for {location}")
-    #
-    #     return "sunny with a temperature of 70 degrees."
+    @function_tool
+    async def start_game(self, context: RunContext, player_name: str):
+        """
+        Start the improv game. Call this after the user provides their name.
+        Returns the first scenario.
+        """
+        self.game.player_name = player_name
+        scenario = self.game.get_next_scenario()
+        return f"Welcome {player_name}! Here is your first scenario: {scenario}"
+
+    @function_tool
+    async def next_round(self, context: RunContext, reaction: str):
+        """
+        Call this after you have reacted to the player's performance.
+        Args:
+            reaction: A brief summary of your reaction to the player's performance.
+        """
+        # Get the scenario we just finished
+        scenario_just_played = self.game.get_next_scenario()
+        
+        # Save history
+        self.game.add_history(scenario_just_played, reaction)
+        
+        # Move forward
+        self.game.advance_round()
+        
+        # Check status
+        if self.game.is_game_over:
+            return "GAME_OVER. Please call get_game_summary to wrap up."
+            
+        # Get new scenario
+        next_scen = self.game.get_next_scenario()
+        return f"Next Scenario: {next_scen}"
+
+    @function_tool
+    async def get_game_summary(self, context: RunContext):
+        """
+        Call this when the game is over to get a summary of the session.
+        """
+        return f"Game History: {self.game.history}"
 
 
 def prewarm(proc: JobProcess):
